@@ -1,6 +1,6 @@
 # Contract Watchdog Autopilot
 
-Construído por Bruno Lujan Larocca, Maria Eduarda, Fabio e
+Construído por Bruno Lujan Larocca, Maria Eduarda Vieira de Moraes, Fabio e
 Marcelo Vieira da Silva em dois dias no hackathon Aton Praxis, tema 29.
 O produto se chama Revelio.
 
