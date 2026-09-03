@@ -1,9 +1,10 @@
 # Contract Watchdog Autopilot
 
-Lê o contrato, calcula as datas que ninguém calculou, e cobra sozinho.
+Construído por Bruno Lujan Larocca, Maria Eduarda, Fabio e
+Marcelo Vieira da Silva em dois dias no hackathon Aton Praxis, tema 29.
+O produto se chama Revelio.
 
-Construído em dois dias no hackathon, tema 29 (Compliance), por um time de
-quatro pessoas. Na interface o produto se chama Revelio.
+O produto lê o contrato, calcula as datas que ninguém calculou, e cobra sozinho.
 
 ---
 
