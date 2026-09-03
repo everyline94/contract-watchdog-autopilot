@@ -1,0 +1,736 @@
+{
+  "gerado_em": "2026-08-29",
+  "aviso": "Documentos ficticios. Datas esperadas calculadas a mao para medir acuracia.",
+  "contratos": [
+    {
+      "arquivo": "CONTRATO-A-VJ-Motion-Albuquerque-2026.pdf",
+      "tipo": "servico_evento_presencial",
+      "ancora_evento": "2026-12-12",
+      "valor_total": 8900.0,
+      "desconto": 600.0,
+      "valor_liquido": 8300.0,
+      "datas": [
+        {
+          "id": "A01",
+          "kind": "evento",
+          "regra": "data absoluta escrita",
+          "esperado": "2026-12-12",
+          "escrita_no_contrato": true,
+          "hora_inicio": "19:00",
+          "hora_termino": "05:00",
+          "termino_dia_seguinte": true,
+          "evidencia": {
+            "clausula": "CLÁUSULA PRIMEIRA",
+            "item": "1.4.2.2",
+            "pagina": 2,
+            "citacao": "A prestação de serviços ocorrerá no dia 12 de dezembro de 2026 com horário de início às 19:00 hs e com término às 05:00 hs do dia 13 de dezembro de 2026. Eventual atraso na programação do evento por r"
+          }
+        },
+        {
+          "id": "A02",
+          "kind": "parcela",
+          "regra": "data absoluta escrita",
+          "esperado": "2026-08-14",
+          "valor": 2490.0,
+          "percentual": 30,
+          "escrita_no_contrato": true,
+          "evidencia": {
+            "clausula": "CLÁUSULA TERCEIRA",
+            "item": "i.",
+            "pagina": 3,
+            "citacao": "R$ 2.490,00 (dois mil, quatrocentos e noventa reais) de entrada, até 14 de agosto de 2026 (já concedido o valor de desconto considerado na cláusula 2.1)."
+          }
+        },
+        {
+          "id": "A03",
+          "kind": "saldo_pre_evento",
+          "regra": "evento - 7 dias (cláusula 3.1) E data absoluta escrita",
+          "esperado": "2026-12-05",
+          "esperado_ajustado": "2026-12-04",
+          "escrito_no_papel": "2026-12-08",
+          "valor": 5810.0,
+          "percentual": 70,
+          "escrita_no_contrato": true,
+          "nota_borda": "05/12/2026 e sabado. Prazo para tras antecipa: a data util e 04/12.",
+          "DIVERGENCIA": "INTENCIONAL. A regra dá 05/12/2026, o papel diz 08/12/2026. Serve para demonstrar a auditoria de coerência. O motor deve sinalizar, manter a data escrita como vigente, e alertar nas duas.",
+          "evidencia": {
+            "clausula": "CLÁUSULA TERCEIRA",
+            "item": "ii.",
+            "pagina": 3,
+            "citacao": "O restante de R$ 5.810,00 (cinco mil, oitocentos e dez reais) a serem pagos até 08 de dezembro de 2026 (já concedido o valor de desconto considerado na cláusula 2.1)."
+          }
+        },
+        {
+          "id": "A04",
+          "kind": "entrega_material",
+          "devedor": "contratante",
+          "regra": "evento - 30 dias",
+          "esperado": "2026-11-12",
+          "escrita_no_contrato": false,
+          "descricao": "fotos, vídeos, textos, tema e referências",
+          "evidencia": {
+            "clausula": "CLÁUSULA PRIMEIRA",
+            "item": "viii.",
+            "pagina": 1,
+            "citacao": "Para criação dos materiais visuais (vídeos, monograma, etc.), o(a) CONTRATANTE compromete se a enviar, com antecedência mínima de 30 (trinta) dias da data do evento:"
+          }
+        },
+        {
+          "id": "A05",
+          "kind": "entrega_material",
+          "devedor": "terceiro",
+          "devedor_detalhe": "fornecedor técnico de LED",
+          "regra": "evento - 30 dias",
+          "esperado": "2026-11-12",
+          "escrita_no_contrato": false,
+          "descricao": "mapeamento da projeção",
+          "evidencia": {
+            "clausula": "CLÁUSULA QUINTA",
+            "item": "k.",
+            "pagina": 5,
+            "citacao": "Garantir que o fornecedor técnico envie o mapeamento da projeção (pixelmap) ao CONTRATADO no prazo máximo de 30 (trinta) dias antes do evento, bem como garantir, no dia, que o mapeamento esteja adequa"
+          }
+        },
+        {
+          "id": "A06",
+          "kind": "entrega_material",
+          "devedor": "contratante",
+          "regra": "evento - 30 dias",
+          "esperado": "2026-11-12",
+          "escrita_no_contrato": false,
+          "descricao": "contato da equipe técnica",
+          "evidencia": {
+            "clausula": "CLÁUSULA QUINTA",
+            "item": "3.",
+            "pagina": 6,
+            "citacao": "Energia elétrica estabilizada e aterrada, adequada aos equipamentos em uso. O contato da equipe técnica deverá ser encaminhado ao CONTRATADO com antecedência mínima de 30 (trinta) dias do evento."
+          }
+        },
+        {
+          "id": "A07",
+          "kind": "fronteira_cancelamento",
+          "regra": "evento - 60 dias",
+          "esperado": "2026-10-13",
+          "escrita_no_contrato": false,
+          "percentual_devido": 30,
+          "valor_devido": 2490.0,
+          "evidencia": {
+            "clausula": "CLÁUSULA SEXTA",
+            "item": "i.",
+            "pagina": 6,
+            "citacao": "Se o cancelamento ocorrer com antecedência superior a 60 (sessenta) dias da data do evento:"
+          }
+        },
+        {
+          "id": "A08",
+          "kind": "fronteira_cancelamento",
+          "regra": "evento - 30 dias",
+          "esperado": "2026-11-12",
+          "escrita_no_contrato": false,
+          "percentual_devido": 50,
+          "valor_devido": 4150.0,
+          "evidencia": {
+            "clausula": "CLÁUSULA SEXTA",
+            "item": "ii.",
+            "pagina": 6,
+            "citacao": "Se o cancelamento ocorrer entre 59 (cinquenta e nove) e 30 (trinta) dias antes da data do evento:"
+          }
+        },
+        {
+          "id": "A09",
+          "kind": "fronteira_cancelamento",
+          "regra": "após evento - 30 dias, faixa aberta",
+          "esperado": "2026-11-12",
+          "escrita_no_contrato": false,
+          "percentual_devido": 100,
+          "valor_devido": 8300.0,
+          "evidencia": {
+            "clausula": "CLÁUSULA SEXTA",
+            "item": "iii.",
+            "pagina": 6,
+            "citacao": "Se o cancelamento ocorrer com antecedência inferior a 30 (trinta) dias da data do evento:"
+          }
+        },
+        {
+          "id": "A10",
+          "kind": "aviso_mudanca_local",
+          "regra": "evento - 48 horas",
+          "esperado": "2026-12-10",
+          "escrita_no_contrato": false,
+          "condicao": "houver mudança de local",
+          "evidencia": {
+            "clausula": "CLÁUSULA PRIMEIRA",
+            "item": "1.4.2.1",
+            "pagina": 2,
+            "citacao": "Qualquer mudança no local deverá ser informada imediatamente ao CONTRATADO através no número (51) 99812-3477, com ligação ou mensagem de WhatsApp, com no mínimo 48 horas de antecedência. O novo local "
+          }
+        },
+        {
+          "id": "A11",
+          "kind": "gatilho_rescisao",
+          "regra": "vencimento da parcela + 10 dias",
+          "esperado": "2026-08-24",
+          "escrita_no_contrato": false,
+          "base": "vencimento da entrada, 14/08/2026",
+          "evidencia": {
+            "clausula": "CLÁUSULA SEXTA",
+            "item": "i.",
+            "pagina": 7,
+            "citacao": "Além dos acréscimos e encargos previstos na Cláusula Terceira, o atraso superior a 10 (dez) dias ou a existência de parcelas em aberto até 48 (quarenta e oito) horas antes do evento autorizará o CONTR"
+          }
+        },
+        {
+          "id": "A12",
+          "kind": "decisao_comparecimento",
+          "regra": "evento - 48 horas SE houver parcela em aberto",
+          "esperado": "2026-12-10",
+          "escrita_no_contrato": false,
+          "condicao": "saldo_em_aberto > 0",
+          "nota": "A data de maior valor do contrato. Condicional.",
+          "evidencia": {
+            "clausula": "CLÁUSULA TERCEIRA",
+            "item": "ii.",
+            "pagina": 3,
+            "citacao": "Deixar de comparecer ao evento, sem devolução de valores já pagos, caso o atraso persista até 48 (quarenta e oito) horas antes da data do evento."
+          }
+        },
+        {
+          "id": "A13",
+          "kind": "solicitacao_material",
+          "regra": "data de uso - 10 dias",
+          "esperado": null,
+          "escrita_no_contrato": false,
+          "condicao": "houver solicitação",
+          "evidencia": {
+            "clausula": "CLÁUSULA QUARTA",
+            "item": "vi.",
+            "pagina": 4,
+            "citacao": "Poder disponibilizar ao(à) CONTRATANTE, a seu critério, press-release e fotos para divulgação, desde que solicitados com antecedência mínima de 10 (dez) dias da data em que serão utilizados. Tal mater"
+          }
+        }
+      ],
+      "contadores": [
+        {
+          "id": "A14",
+          "limite": 2,
+          "unidade": "alteracoes",
+          "escopo": "por arte ou vídeo",
+          "valor_excedente": 200.0,
+          "evidencia": {
+            "clausula": "CLÁUSULA PRIMEIRA",
+            "item": "xi.",
+            "pagina": 2,
+            "citacao": "Fica claro que são permitidas até 2 (duas) alterações simples (cores e fontes) por arte ou vídeo criado, após escopo fechado, sem custos adicionais. Alterações adicionais terão o custo de R$ 200,00 (d"
+          }
+        },
+        {
+          "id": "A15",
+          "limite": 3,
+          "unidade": "horas",
+          "escopo": "consultoria, no total do contrato",
+          "valor_excedente": null,
+          "evidencia": {
+            "clausula": "CLÁUSULA PRIMEIRA",
+            "item": "vi.",
+            "pagina": 1,
+            "citacao": "Consultoria artística com cliente, parceiros técnicos e cerimonial de forma remota (telefone, WhatsApp, email ou videoconferência), limitada a até 3 horas de reuniões/atendimentos. Atendimentos adicio"
+          }
+        },
+        {
+          "id": "A16",
+          "limite": 0,
+          "unidade": "horas",
+          "escopo": "após o término contratado (05:00)",
+          "valor_excedente": 200.0,
+          "evidencia": {
+            "clausula": "CLÁUSULA PRIMEIRA",
+            "item": "1.4.2.3",
+            "pagina": 2,
+            "citacao": "Será cobrado valor adicional de R$ 200,00 (duzentos reais) por cada hora excedente após o horário de término contratado, desde que haja disponibilidade do CONTRATADO e concordância do CONTRATANTE com "
+          }
+        },
+        {
+          "id": "A17",
+          "tipo": "mora",
+          "multa_pct": 2.0,
+          "juros_mes_pct": 1.0,
+          "pro_rata_die": true,
+          "indice": "IPCA",
+          "evidencia": {
+            "clausula": "CLÁUSULA TERCEIRA",
+            "item": "i.",
+            "pagina": 3,
+            "citacao": "Multa moratória de 2% (dois por cento) sobre o valor devido;"
+          }
+        }
+      ]
+    },
+    {
+      "arquivo": "CONTRATO-B-Criacao-Video-Alecrim-2026.pdf",
+      "tipo": "criacao_estudio",
+      "ancora_evento": null,
+      "ANCORA_AUSENTE": "A data do evento NAO consta no documento. 9 das 13 datas ficam pendentes ate um humano informar. E o caso de demo da fila de confirmacao.",
+      "valor_total": 3290.0,
+      "datas": [
+        {
+          "id": "B01",
+          "kind": "evento",
+          "regra": "ausente. A contratante informará com 30 dias de antecedência",
+          "esperado": null,
+          "escrita_no_contrato": false,
+          "motivo_ausencia": "data do evento não consta no documento",
+          "evidencia": {
+            "clausula": "CLÁUSULA PRIMEIRA",
+            "item": "7.",
+            "pagina": 2,
+            "citacao": "A CONTRATANTE compromete-se a informar ao CONTRATADO, com antecedência mínima de 30 (trinta) dias da data do evento:"
+          }
+        },
+        {
+          "id": "B02",
+          "kind": "parcela",
+          "regra": "data absoluta escrita",
+          "esperado": "2026-09-05",
+          "valor": 987.0,
+          "percentual": 30,
+          "escrita_no_contrato": true,
+          "evidencia": {
+            "clausula": "CLÁUSULA QUARTA",
+            "item": "a.",
+            "pagina": 3,
+            "citacao": "30% (trinta por cento) do valor total, a título de sinal e princípio de pagamento, no momento da contratação, sendo o valor de R$ 987,00 (novecentos e oitenta e sete reais), até 05/09/2026"
+          }
+        },
+        {
+          "id": "B03",
+          "kind": "saldo_pre_evento",
+          "regra": "evento - 7 dias",
+          "esperado": null,
+          "valor": 2303.0,
+          "percentual": 70,
+          "escrita_no_contrato": false,
+          "pendente_de": "B01",
+          "evidencia": {
+            "clausula": "CLÁUSULA QUARTA",
+            "item": "b.",
+            "pagina": 3,
+            "citacao": "O saldo remanescente, correspondente a 70% (setenta por cento), deverá ser pago até 07 (sete) dias antes da data do evento, sendo o valor de R$ 2.303,00 (dois mil, trezentos e três reais)."
+          }
+        },
+        {
+          "id": "B04",
+          "kind": "entrega_material",
+          "devedor": "contratante",
+          "regra": "evento - 30 dias",
+          "esperado": null,
+          "escrita_no_contrato": false,
+          "pendente_de": "B01",
+          "descricao": "fotos, vídeos, textos, artes base, referências",
+          "evidencia": {
+            "clausula": "CLÁUSULA SEGUNDA",
+            "item": "8.",
+            "pagina": 2,
+            "citacao": "Para criação dos vídeos, a CONTRATANTE deverá enviar ao CONTRATADO, com antecedência mínima de 30 (trinta) dias da data do evento:"
+          }
+        },
+        {
+          "id": "B05",
+          "kind": "entrega_material",
+          "devedor": "contratante",
+          "regra": "evento - 30 dias",
+          "esperado": null,
+          "escrita_no_contrato": false,
+          "pendente_de": "B01",
+          "descricao": "data, local, tipo de evento e contato do fornecedor técnico",
+          "nota": "Circular: a obrigação de informar a data deriva da própria data.",
+          "evidencia": {
+            "clausula": "CLÁUSULA PRIMEIRA",
+            "item": "7.",
+            "pagina": 2,
+            "citacao": "A CONTRATANTE compromete-se a informar ao CONTRATADO, com antecedência mínima de 30 (trinta) dias da data do evento:"
+          }
+        },
+        {
+          "id": "B06",
+          "kind": "fronteira_cancelamento",
+          "regra": "evento - 60 dias",
+          "esperado": null,
+          "escrita_no_contrato": false,
+          "pendente_de": "B01",
+          "percentual_devido": 30,
+          "valor_devido": 987.0,
+          "evidencia": {
+            "clausula": "CLÁUSULA SÉTIMA",
+            "item": "a.",
+            "pagina": 5,
+            "citacao": "Cancelamento com antecedência superior a 60 (sessenta) dias da data do evento:"
+          }
+        },
+        {
+          "id": "B07",
+          "kind": "fronteira_cancelamento",
+          "regra": "evento - 30 dias",
+          "esperado": null,
+          "escrita_no_contrato": false,
+          "pendente_de": "B01",
+          "percentual_devido": 50,
+          "valor_devido": 1645.0,
+          "evidencia": {
+            "clausula": "CLÁUSULA SÉTIMA",
+            "item": "b.",
+            "pagina": 5,
+            "citacao": "Cancelamento entre 59 (cinquenta e nove) e 30 (trinta) dias antes da data do evento:"
+          }
+        },
+        {
+          "id": "B08",
+          "kind": "fronteira_cancelamento",
+          "regra": "após evento - 30 dias",
+          "esperado": null,
+          "escrita_no_contrato": false,
+          "pendente_de": "B01",
+          "percentual_devido": 100,
+          "valor_devido": 3290.0,
+          "evidencia": {
+            "clausula": "CLÁUSULA SÉTIMA",
+            "item": "c.",
+            "pagina": 5,
+            "citacao": "Cancelamento com antecedência inferior a 30 (trinta) dias da data do evento:"
+          }
+        },
+        {
+          "id": "B09",
+          "kind": "gatilho_rescisao",
+          "regra": "vencimento da parcela + 10 dias",
+          "esperado": "2026-09-15",
+          "escrita_no_contrato": false,
+          "base": "vencimento da entrada, 05/09/2026",
+          "evidencia": {
+            "clausula": "CLÁUSULA SÉTIMA",
+            "item": "a.",
+            "pagina": 6,
+            "citacao": "Além dos acréscimos da Cláusula Quarta, o atraso superior a 10 (dez) dias ou a existência de parcelas em aberto até 48 (quarenta e oito) horas antes do evento autorizará o CONTRATADO a considerar o co"
+          }
+        },
+        {
+          "id": "B10",
+          "kind": "decisao_comparecimento",
+          "regra": "evento - 48 horas SE houver parcela em aberto",
+          "esperado": null,
+          "escrita_no_contrato": false,
+          "pendente_de": "B01",
+          "condicao": "saldo_em_aberto > 0",
+          "evidencia": {
+            "clausula": "CLÁUSULA QUARTA",
+            "item": "b.",
+            "pagina": 4,
+            "citacao": "Considerar rescindido o contrato por culpa da CONTRATANTE, se persistir atraso até 48 (quarenta e oito) horas antes da data do evento, aplicando-se as penalidades previstas na Cláusula Sexta."
+          }
+        },
+        {
+          "id": "B11",
+          "kind": "entrega_pos_contrato",
+          "regra": "INDETERMINADA. \"definido entre as partes por escrito\"",
+          "esperado": null,
+          "escrita_no_contrato": false,
+          "motivo_ausencia": "o contrato não fixa o cronograma de primeiras versões",
+          "evidencia": {
+            "clausula": "CLÁUSULA SEGUNDA",
+            "item": "13.",
+            "pagina": 3,
+            "citacao": "O cronograma de entrega de primeiras versões será definido entre as partes por escrito (e-mail ou WhatsApp), considerando:"
+          }
+        },
+        {
+          "id": "B12",
+          "kind": "marco_entrega",
+          "regra": "data do envio do link. É o marco que extingue o contrato",
+          "esperado": null,
+          "escrita_no_contrato": false,
+          "evidencia": {
+            "clausula": "CLÁUSULA PRIMEIRA",
+            "item": "6.",
+            "pagina": 2,
+            "citacao": "Método de entrega: todos os vídeos serão entregues por meio de pasta virtual (como drive em nuvem ou link de download), cujo acesso será enviado à CONTRATANTE por e mail ou WhatsApp, sendo considerada"
+          }
+        },
+        {
+          "id": "B13",
+          "kind": "solicitacao_material",
+          "regra": "data de uso - 10 dias",
+          "esperado": null,
+          "escrita_no_contrato": false,
+          "condicao": "houver solicitação",
+          "evidencia": {
+            "clausula": "CLÁUSULA QUINTA",
+            "item": "22.",
+            "pagina": 4,
+            "citacao": "O CONTRATADO poderá disponibilizar à CONTRATANTE, a seu critério, press release e imagens para divulgação, mediante solicitação com antecedência mínima de 10 (dez) dias, sem que isso constitua obrigaç"
+          }
+        }
+      ],
+      "contadores": [
+        {
+          "id": "B14",
+          "limite": 2,
+          "unidade": "alteracoes",
+          "escopo": "por vídeo",
+          "valor_excedente": null,
+          "evidencia": {
+            "clausula": "CLÁUSULA SEGUNDA",
+            "item": "10.",
+            "pagina": 2,
+            "citacao": "Ficam permitidas até 2 (duas) alterações simples por vídeo, após a apresentação da primeira versão, entendendo-se como alterações simples:"
+          }
+        },
+        {
+          "id": "B15",
+          "limite": 3,
+          "unidade": "horas",
+          "escopo": "reuniões de alinhamento, no total",
+          "valor_excedente": null,
+          "evidencia": {
+            "clausula": "CLÁUSULA QUINTA",
+            "item": "d.",
+            "pagina": 4,
+            "citacao": "Realizar reuniões de alinhamento com a CONTRATANTE, preferencialmente de forma remota (telefone, WhatsApp, e-mail ou videoconferência), limitadas a até 3 (três) horas no total. Atendimentos adicionais"
+          }
+        },
+        {
+          "id": "B16",
+          "tipo": "mora",
+          "multa_pct": 2.0,
+          "juros_mes_pct": 1.0,
+          "pro_rata_die": true,
+          "indice": "IPCA",
+          "evidencia": {
+            "clausula": "CLÁUSULA QUARTA",
+            "item": "a.",
+            "pagina": 4,
+            "citacao": "Multa moratória de 2% (dois por cento) sobre o valor em aberto;"
+          }
+        }
+      ]
+    },
+    {
+      "arquivo": "CONTRATO-C-Filmagem-Casamento-2026.pdf",
+      "tipo": "filmagem_evento",
+      "papel_do_usuario": "CONTRATANTE",
+      "NOTA": "Mesmo profissional dos contratos A e B, aqui do outro lado da mesa. Contrato encerrado: o evento foi em 08/05/2026.",
+      "ancora_evento": "2026-05-08",
+      "assinatura": "2025-09-10",
+      "valor_total": 7500.0,
+      "datas": [
+        {
+          "id": "C01",
+          "kind": "evento",
+          "regra": "data absoluta escrita",
+          "esperado": "2026-05-08",
+          "escrita_no_contrato": true,
+          "nota": "Sem horário. Os contratos A e B tinham; este não.",
+          "evidencia": {
+            "clausula": "Cláusula 1ª",
+            "item": null,
+            "pagina": 1,
+            "citacao": "DO OBJETO DO CONTRATO Cláusula 1ª. É objeto do presente contrato a prestação do serviço de FILMAGEM para o evento de casamento que se realizará no dia 08 de maio de 2026 , na cidade de Gravataí. A equ"
+          }
+        },
+        {
+          "id": "C02",
+          "kind": "assinatura",
+          "regra": "data absoluta escrita",
+          "esperado": "2025-09-10",
+          "escrita_no_contrato": true,
+          "evidencia": {
+            "clausula": "Cláusula 15ª",
+            "item": null,
+            "pagina": 3,
+            "citacao": "Tramandaí, 10 de setembro de 2025."
+          }
+        },
+        {
+          "id": "C03",
+          "kind": "parcela",
+          "regra": "âncora assinatura, offset 0",
+          "esperado": "2025-09-10",
+          "valor": 3750.0,
+          "percentual": 50,
+          "escrita_no_contrato": false,
+          "evidencia": {
+            "clausula": "Cláusula 6ª",
+            "item": null,
+            "pagina": 2,
+            "citacao": "DO PREÇO E DAS CONDIÇÕES DE PAGAMENTO Cláusula 6ª. O presente serviço será remunerado pela quantia de R$ 7.500,00( sete mil e quinhentos reais), sendo realizado da seguinte forma: R$ 3.750,00 (três mi"
+          }
+        },
+        {
+          "id": "C04",
+          "kind": "parcela",
+          "regra": "AMBÍGUA: \"no mês do evento\", sem dia",
+          "esperado": null,
+          "valor": 3750.0,
+          "percentual": 50,
+          "escrita_no_contrato": false,
+          "motivo_ausencia": "o contrato diz o mês (maio/2026) mas não o dia",
+          "nota": "Ambiguidade diferente da ausência do contrato B: aqui a informação existe, mas é imprecisa demais para virar data.",
+          "evidencia": {
+            "clausula": "Cláusula 6ª",
+            "item": null,
+            "pagina": 2,
+            "citacao": "DO PREÇO E DAS CONDIÇÕES DE PAGAMENTO Cláusula 6ª. O presente serviço será remunerado pela quantia de R$ 7.500,00( sete mil e quinhentos reais), sendo realizado da seguinte forma: R$ 3.750,00 (três mi"
+          }
+        },
+        {
+          "id": "C05",
+          "kind": "entrega_pos_contrato",
+          "regra": "evento + 90 dias, piso da faixa",
+          "esperado": "2026-08-06",
+          "escrita_no_contrato": false,
+          "faixa": "piso",
+          "evidencia": {
+            "clausula": "Cláusula 9ª",
+            "item": null,
+            "pagina": 2,
+            "citacao": "DO PRAZO Cláusula 9ª. O CONTRATADO assume o compromisso de realizar e entregar o serviço dentro do prazo de até 90 (noventa) até 120(cento e vinte) dias , a contar da data do evento, de acordo com a f"
+          }
+        },
+        {
+          "id": "C06",
+          "kind": "entrega_pos_contrato",
+          "regra": "evento + 120 dias, teto da faixa",
+          "esperado": "2026-09-05",
+          "esperado_ajustado": "2026-09-08",
+          "escrita_no_contrato": false,
+          "faixa": "teto",
+          "nota_borda": "05/09/2026 e sabado e a segunda seguinte, 07/09, e o feriado da Independencia. Prazo para frente posterga pulando a emenda: a data util e 08/09.",
+          "nota": "PRAZO EM FAIXA, não offset único. Novo em relação a A e B.",
+          "evidencia": {
+            "clausula": "Cláusula 9ª",
+            "item": null,
+            "pagina": 2,
+            "citacao": "DO PRAZO Cláusula 9ª. O CONTRATADO assume o compromisso de realizar e entregar o serviço dentro do prazo de até 90 (noventa) até 120(cento e vinte) dias , a contar da data do evento, de acordo com a f"
+          }
+        },
+        {
+          "id": "C07",
+          "kind": "entrega_pos_contrato",
+          "regra": "teto + 30 dias, SE o contratado informar",
+          "esperado": "2026-10-05",
+          "escrita_no_contrato": false,
+          "condicao": "o contratado informar o prazo adicional",
+          "evidencia": {
+            "clausula": "Cláusula 9ª",
+            "item": null,
+            "pagina": 2,
+            "citacao": "DO PRAZO Cláusula 9ª. O CONTRATADO assume o compromisso de realizar e entregar o serviço dentro do prazo de até 90 (noventa) até 120(cento e vinte) dias , a contar da data do evento, de acordo com a f"
+          }
+        },
+        {
+          "id": "C08",
+          "kind": "janela_alteracoes",
+          "regra": "entrega EFETIVA + 30 dias",
+          "esperado": null,
+          "escrita_no_contrato": false,
+          "pendente_de": "C05/C06",
+          "nota": "Derivada de uma data que é ela mesma derivada e ainda por cima é uma faixa. A data-limite varia 30 dias conforme quando a entrega saiu.",
+          "evidencia": {
+            "clausula": "Parágrafo Único",
+            "item": null,
+            "pagina": 1,
+            "citacao": "Parágrafo Único. Após a entrega do serviço, o CONTRATANTE terá 30 dias para efetuar alterações ou correções possíveis e que achar necessário nos arquivos digitais de Filmagem. (O material bruto do eve"
+          }
+        },
+        {
+          "id": "C09",
+          "kind": "disponibilidade_arquivo",
+          "regra": "entrega EFETIVA + 2 meses",
+          "esperado": null,
+          "escrita_no_contrato": false,
+          "pendente_de": "C05/C06",
+          "evidencia": {
+            "clausula": "Parágrafo Único",
+            "item": null,
+            "pagina": 1,
+            "citacao": "Parágrafo Único. Após a entrega do serviço, o CONTRATANTE terá 30 dias para efetuar alterações ou correções possíveis e que achar necessário nos arquivos digitais de Filmagem. (O material bruto do eve"
+          }
+        },
+        {
+          "id": "C10",
+          "kind": "evento_secundario",
+          "regra": "AUSENTE. Existe ensaio (cláusula 5ª cita vídeo do ensaio) mas a data não consta",
+          "esperado": null,
+          "escrita_no_contrato": false,
+          "motivo_ausencia": "a data do ensaio não está em lugar nenhum do contrato",
+          "evidencia": {
+            "clausula": "Cláusula 4º",
+            "item": null,
+            "pagina": 1,
+            "citacao": "Cláusula 4º Em caso de chuva, é obrigatório a remarcação da data do ensaio pela CONTRATANTE."
+          }
+        },
+        {
+          "id": "C11",
+          "kind": "remarcacao",
+          "regra": "pendente da data do ensaio",
+          "esperado": null,
+          "escrita_no_contrato": false,
+          "pendente_de": "C10",
+          "condicao": "chuva no dia do ensaio",
+          "evidencia": {
+            "clausula": "Cláusula 4º",
+            "item": null,
+            "pagina": 1,
+            "citacao": "Cláusula 4º Em caso de chuva, é obrigatório a remarcação da data do ensaio pela CONTRATANTE."
+          }
+        }
+      ],
+      "contadores": [
+        {
+          "id": "C12",
+          "tipo": "rescisao",
+          "regra": "devolve 30% do valor JÁ PAGO, sem escalonamento por data",
+          "percentual_devolucao": 30,
+          "nota": "Inverso de A e B, que escalonam por faixa de data. Aqui é fixo, e ruim para o contratante: cancelou, perde 70% do que pagou, sempre.",
+          "evidencia": {
+            "clausula": "Cláusula 7ª",
+            "item": null,
+            "pagina": 2,
+            "citacao": "DA RESCISÃO E DESCUMPRIMENTO Cláusula 7ª. Poderá o presente instrumento ser rescindido por parte do CONTRATANTE em qualquer momento, sem que haja qualquer tipo de motivo relevante. A devolução do paga"
+          }
+        },
+        {
+          "id": "C13",
+          "tipo": "multa_descumprimento",
+          "percentual": 50,
+          "valor": 3750.0,
+          "regra": "50% do valor do contrato, qualquer cláusula exceto a 7ª",
+          "evidencia": {
+            "clausula": "Cláusula 8ª",
+            "item": null,
+            "pagina": 2,
+            "citacao": "Cláusula 8ª. Com exceção da cláusula sétima, o descumprimento pelas PARTES de quaisquer cláusulas previstas no presente instrumento e seus anexos, além da possibilidade de encerramento, independenteme"
+          }
+        },
+        {
+          "id": "C14",
+          "tipo": "clausula_morta",
+          "regra": "remarcação sem custo se houver isolamento social por COVID-19",
+          "nota": "Condição que não se realiza mais. Contrato de 2025 carregando cláusula de pandemia. O extrator não deve tratar como ativa.",
+          "evidencia": {
+            "clausula": "Cláusula 7ª",
+            "item": null,
+            "pagina": 2,
+            "citacao": "DA RESCISÃO E DESCUMPRIMENTO Cláusula 7ª. Poderá o presente instrumento ser rescindido por parte do CONTRATANTE em qualquer momento, sem que haja qualquer tipo de motivo relevante. A devolução do paga"
+          }
+        }
+      ],
+      "AUSENCIAS_NOTAVEIS": [
+        "sem multa moratória por atraso de pagamento",
+        "sem juros de mora",
+        "sem índice de correção",
+        "sem faixas de cancelamento por data",
+        "sem horário de início ou término do evento"
+      ]
+    }
+  ]
+}

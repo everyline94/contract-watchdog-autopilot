@@ -1,0 +1,86 @@
+# clone do BMad usado só como fonte do instalador
+bmad-method/
+
+# dependências e build
+node_modules/
+.next/
+.vercel/
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# ambiente
+.env
+.env.local
+.env*.local
+
+# sistema
+.DS_Store
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# env files (can opt-in for committing if needed)
+.env*
+!.env.example
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# Contratos ORIGINAIS: tem dado pessoal real (CPF, endereco, telefone e
+# assinatura manuscrita). O que entra no historico do git fica la para sempre,
+# inclusive em repo privado. So a versao anonimizada e versionada.
+contratos/*.docx
+contratos/*.pdf
+!contratos/preenchidos/
+
+# De-para da anonimizacao e listas do filter-repo: o lado esquerdo das trocas
+# e dado pessoal real. NUNCA versionar.
+tools/privado*
+
+# saida de ferramenta local
+.playwright-mcp/
+.env.gateway
+
+# Prints de conferencia e snapshots de acessibilidade do Playwright ficam
+# soltos na raiz quando a gente tira. Sao descartaveis: as imagens que o
+# produto usa de verdade moram em public/.
+/*.png
+/*-snap.yml
+/*-snapshot.yml
+/dash-filtro.yml
+
+# saida vazia do BMad
+_bmad-output/
