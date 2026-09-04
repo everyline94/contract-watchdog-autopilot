@@ -55,7 +55,7 @@ Duas consequências:
 | Rota | O que é |
 |---|---|
 | `/` | Demo guiada em seis passos. Roda sem modelo: usa o gabarito e o motor de datas |
-| `/app` | O produto: painel, upload com fila, ficha do contrato com cláusulas e agenda, fila de incerteza, notificação por e-mail e WhatsApp, conectores de Drive e OneDrive (simulados) |
+| `/app` | O produto: painel, upload com fila, ficha do contrato com cláusulas e agenda, fila de incerteza, notificação por e-mail e WhatsApp, conectores de Drive e OneDrive (simulados). **A leitura do PDF aqui é encenada**, ver abaixo |
 | `/c/[token]` | A página que a contraparte abre pelo link da notificação |
 | `/ler` | Leitor ao vivo. Sobe qualquer PDF e vê a extração de verdade. Precisa de modelo, ver abaixo |
 | `/api/extrair` | A rota que o leitor chama: PDF entra, obrigações com citação e página saem |
@@ -64,6 +64,17 @@ Duas consequências:
 O `/app` roda em cima de um store em memória (`src/lib/data/store.ts`), semeado por
 `src/lib/data/mocks.ts`. Não tem banco: o `src/lib/db/cliente.ts` está pronto para o
 Supabase, mas nada o chama ainda.
+
+### Onde a leitura é de verdade
+
+Só o `/ler` lê o PDF. Ele chama `/api/extrair`, que roda o modelo, confere
+cada citação contra a página e devolve o calendário calculado.
+
+A fila de upload do `/app` **não lê o arquivo que você subir**. Ela avança por
+tempo (`ETAPAS_SIMULADAS` em `src/lib/data/upload.ts`) e devolve um resultado
+fixo, igual para qualquer PDF. É vitrine do fluxo do produto, não extração. Se
+você quer ver o sistema ler o **seu** contrato, é no `/ler`. A costura para
+ligar os dois está anotada no topo daquele arquivo.
 
 ---
 
@@ -87,16 +98,30 @@ comentadas em `.env.example`.
 - `gateway`: AI Gateway da Vercel. Precisa de `AI_GATEWAY_API_KEY`. É o padrão
   quando está na Vercel.
 
-**Testar a extração sem interface:**
+**Não tem chave de API embutida no projeto.** Rodando na sua máquina, a leitura
+sai pela sua própria conta do Claude Code: instale o Claude Code, rode `claude`
+uma vez e faça login. Confira com `claude --version`. Sem isso, o `/ler`
+devolve erro de motor. Quem prefere a chave da Vercel põe
+`AI_GATEWAY_API_KEY` no `.env.local` e `MOTOR_LEITURA=gateway`.
+
+Uma leitura leva de 3 a 8 minutos num contrato de cinco páginas. São quatro
+chamadas em paralelo e a tela mostra cada família chegando.
+
+**Testar a extração sem interface**, com qualquer PDF, de qualquer pasta:
 
 ```bash
 npx tsx scripts/teste-extracao.ts public/contratos/contrato-videos-estudio.pdf
+npx tsx scripts/teste-extracao.ts ~/Downloads/meu-contrato.pdf
 ```
+
+PDF escaneado não passa: não tem OCR aqui, e sem texto extraível a rota
+devolve 422. Teste antes com `pdftotext -layout arquivo.pdf -` se estiver na
+dúvida.
 
 **Verificar:**
 
 ```bash
-npm test               # 85 testes: motor de datas, relógio, extração, citações
+npm test               # 90 testes: motor de datas, relógio, extração, citações
 npm run typecheck
 npm run lint
 npm run build
@@ -137,7 +162,7 @@ src/components/watchdog/  a demo guiada e o leitor ao vivo
 src/components/ui/        base do shadcn, falando a língua do tokens.css
 src/styles/tokens.css     o design system inteiro, uma cor só
 contratos/preenchidos/    os três PDFs fictícios e o gabarito de 47 obrigações
-src/tests/                os 85 testes, todos sobre cláusulas reais
+src/tests/                os 90 testes, todos sobre cláusulas reais
 docs/                     arquitetura e o schema de extração
 ```
 

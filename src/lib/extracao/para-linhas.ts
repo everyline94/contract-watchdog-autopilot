@@ -107,6 +107,21 @@ export function paraLinhas(c: ContratoExtraido, hoje: string): Leitura {
     }
   };
 
+  /**
+   * So o campo que foi descartado: tinha valor e o corte de confianca
+   * derrubou. Para o que nao vira linha de calendario, perguntar por campo
+   * simplesmente ausente enche a fila de ruido, e fila cheia de obviedade
+   * ninguem le. O contrato nao da prazo para "falecimento do profissional",
+   * e nao precisa dar.
+   */
+  const perguntaSeDescartado = <T,>(
+    sobre: string,
+    campo: Campo<T> | null | undefined,
+  ) => {
+    if (!campo || campo.valor === null) return;
+    perguntaDe(sobre, campo);
+  };
+
   const dias = (iso: string) =>
     differenceInCalendarDays(deISO(iso), deISO(hoje));
 
@@ -245,11 +260,27 @@ export function paraLinhas(c: ContratoExtraido, hoje: string): Leitura {
   const total = confiavel(c.valores.total) ? c.valores.total.valor : null;
   const desconto = confiavel(c.valores.desconto) ? c.valores.desconto.valor : null;
   const base = total !== null ? total - (desconto ?? 0) : null;
+  // O total descartado sumia da tela: o cabecalho mostrava valor vazio e nada
+  // dizia por que. E o valor total e a base de toda multa de cancelamento.
+  perguntaDe("Valor total do contrato", c.valores.total);
+  perguntaSeDescartado("Desconto", c.valores.desconto);
   c.cancelamento.forEach((f, i) => {
     const regra = confiavel(f.limite_inferior) ? f.limite_inferior.valor : null;
-    if (!regra) return;
+    if (!regra) {
+      // Sem fronteira nao ha linha, e ate aqui o campo descartado saia de
+      // cena calado. Existe faixa de cancelamento no documento e o sistema
+      // nao confirmou: isso e pergunta, nao silencio.
+      perguntaDe("Fronteira de cancelamento", f.limite_inferior);
+      return;
+    }
     const r = resolvePrazo(regra, ancoras, FERIADOS);
     const pct = confiavel(f.percentual_devido) ? f.percentual_devido.valor : null;
+    if (pct === null) {
+      perguntaDe(
+        "Fronteira de cancelamento: percentual devido",
+        f.percentual_devido,
+      );
+    }
     linhas.push({
       id: `cancelamento-${i}`,
       titulo: pct !== null
@@ -270,6 +301,20 @@ export function paraLinhas(c: ContratoExtraido, hoje: string): Leitura {
       evidencia: evidenciaDemo(f.limite_inferior.evidencia),
     });
   });
+
+  // Rescisao nao vira linha: o gatilho e um evento condicional, nao uma data
+  // no calendario. Mas o campo descartado aqui tambem precisa aparecer, senao
+  // o que o verificador reprova desaparece sem deixar rastro na tela.
+  c.rescisao.forEach((r) => {
+    perguntaSeDescartado(`Rescisão por ${r.gatilho}: prazo`, r.prazo);
+    perguntaSeDescartado(`Rescisão por ${r.gatilho}: efeito`, r.efeito);
+  });
+  if (c.rescisao_sem_escalonamento) {
+    perguntaSeDescartado(
+      "Devolução sem escalonamento",
+      c.rescisao_sem_escalonamento,
+    );
+  }
 
   linhas.sort((a, b) => (a.data ?? "9999").localeCompare(b.data ?? "9999"));
 

@@ -24,6 +24,19 @@ const normaliza = (s: string) =>
     .trim()
     .toLowerCase();
 
+/**
+ * A conferencia ignora espaco por completo, e nao so o nao-quebravel.
+ *
+ * O texto da pagina vem de pdf.ts, que junta os itens do pdfjs com " ".
+ * Quando o Word quebra a frase em runs (negrito, troca de fonte), entra
+ * espaco onde o documento nao tem: a pagina chega aqui como "r$ 2.990 , 00"
+ * e "contratado , ele devera". O modelo cita o trecho limpo, do jeito que
+ * esta escrito no contrato, e a comparacao literal reprovava citacao certa.
+ * Medido nos dois contratos reais de cinco paginas: 22 desses por documento,
+ * e foi assim que o valor total de um deles acabou descartado.
+ */
+const paraComparacao = (s: string) => normaliza(s).replace(/\s/g, "");
+
 type EvidenciaSolta = {
   citacao: string;
   pagina: number;
@@ -47,7 +60,7 @@ export function verificaCitacoes(
   paginas: PaginaTexto[],
 ): ItemVerificacao[] {
   const textoPorPagina = new Map(
-    paginas.map((p) => [p.numero, normaliza(p.texto)]),
+    paginas.map((p) => [p.numero, paraComparacao(p.texto)]),
   );
   const itens: ItemVerificacao[] = [];
 
@@ -60,7 +73,9 @@ export function verificaCitacoes(
 
     if (pareceEvidencia(no)) {
       const alvo = textoPorPagina.get(no.pagina);
-      const ok = Boolean(alvo && alvo.includes(normaliza(no.citacao)));
+      // agulha vazia reprova: sem a guarda, includes("") passa qualquer coisa
+      const agulha = paraComparacao(no.citacao);
+      const ok = Boolean(alvo && agulha && alvo.includes(agulha));
       if (!ok) no.confianca = 0;
       itens.push({ caminho, pagina: no.pagina, ok, citacao: no.citacao });
       return;
