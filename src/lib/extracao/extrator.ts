@@ -11,7 +11,7 @@
  * O modelo NUNCA calcula: devolve regra com citacao literal e pagina.
  * Quem transforma em data e o motor puro, depois do verificador.
  */
-import { spawn } from "node:child_process";
+import { spawn, spawnSync } from "node:child_process";
 import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
@@ -189,6 +189,38 @@ export function motorDisponivel(): "claude-code" | "gateway" {
   const pedido = process.env.MOTOR_LEITURA;
   if (pedido === "gateway" || pedido === "claude-code") return pedido;
   return process.env.VERCEL ? "gateway" : "claude-code";
+}
+
+/**
+ * O que falta pro motor escolhido rodar, em uma frase com a proxima acao.
+ * Null quando esta tudo no lugar.
+ *
+ * Existe porque a falha mais provavel de quem clona o projeto nao e o PDF: e
+ * nao ter o Claude Code instalado. Sem esta checagem as quatro familias
+ * morrem com "spawn claude ENOENT", a rota conta quatro falhas e a tela diz
+ * "tente de novo", que e o pior conselho possivel: tentar de novo nao instala
+ * nada, e a pessoa conclui que o produto nao funciona.
+ */
+export function faltaPraLer(): string | null {
+  if (motorDisponivel() === "gateway") {
+    return process.env.AI_GATEWAY_API_KEY
+      ? null
+      : "O motor está em 'gateway' e falta a AI_GATEWAY_API_KEY. Ponha a chave no .env.local, ou use MOTOR_LEITURA=claude-code para ler pela sua conta do Claude Code.";
+  }
+  const ambiente: NodeJS.ProcessEnv = {
+    NODE_ENV: process.env.NODE_ENV,
+    PATH: process.env.PATH,
+    HOME: process.env.HOME,
+    USER: process.env.USER,
+  };
+  const encontrado = spawnSync("claude", ["--version"], {
+    env: ambiente,
+    timeout: 15_000,
+  });
+  if (encontrado.error || encontrado.status !== 0) {
+    return "A leitura roda pela sua conta do Claude Code e o comando 'claude' não respondeu nesta máquina. Instale o Claude Code, rode 'claude' uma vez para fazer login, e confira com 'claude --version'. Se preferir a chave da Vercel, use AI_GATEWAY_API_KEY com MOTOR_LEITURA=gateway.";
+  }
+  return null;
 }
 
 /**

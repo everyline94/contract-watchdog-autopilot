@@ -100,9 +100,11 @@ comentadas em `.env.example`.
 
 **Não tem chave de API embutida no projeto.** Rodando na sua máquina, a leitura
 sai pela sua própria conta do Claude Code: instale o Claude Code, rode `claude`
-uma vez e faça login. Confira com `claude --version`. Sem isso, o `/ler`
-devolve erro de motor. Quem prefere a chave da Vercel põe
-`AI_GATEWAY_API_KEY` no `.env.local` e `MOTOR_LEITURA=gateway`.
+uma vez e faça login. Confira com `claude --version`. Quem prefere a chave da
+Vercel põe `AI_GATEWAY_API_KEY` no `.env.local` e `MOTOR_LEITURA=gateway`.
+
+Se faltar o motor, o `/ler` e o script param na hora e dizem o que instalar,
+em vez de tentar ler e falhar depois de alguns minutos.
 
 Uma leitura leva de 3 a 8 minutos num contrato de cinco páginas. São quatro
 chamadas em paralelo e a tela mostra cada família chegando.

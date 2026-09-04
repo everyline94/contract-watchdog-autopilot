@@ -10,6 +10,7 @@ import { agora, hojeISO } from "@/lib/clock";
 import {
   contratoVazio,
   extraiFamilia,
+  faltaPraLer,
   motorDisponivel,
 } from "@/lib/extracao/extrator";
 import { paraLinhas } from "@/lib/extracao/para-linhas";
@@ -106,6 +107,14 @@ export async function POST(req: Request) {
       },
       { status: 422 },
     );
+  }
+
+  // Antes de gastar os minutos de leitura: o motor esta de pe? Falhar aqui,
+  // com 503 e a proxima acao escrita, poupa quem clonou o projeto de esperar
+  // quatro chamadas morrerem pra receber "tente de novo".
+  const falta = faltaPraLer();
+  if (falta) {
+    return Response.json({ erro: falta }, { status: 503 });
   }
 
   const inicio = Date.now();

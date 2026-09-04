@@ -4,7 +4,7 @@
  */
 import { readFileSync } from "node:fs";
 
-import { extraiContrato } from "@/lib/extracao/extrator";
+import { extraiContrato, faltaPraLer } from "@/lib/extracao/extrator";
 import { paraLinhas } from "@/lib/extracao/para-linhas";
 import { extraiPaginas } from "@/lib/extracao/pdf";
 import { verificaCitacoes } from "@/lib/extracao/verificador";
@@ -12,6 +12,15 @@ import { verificaCitacoes } from "@/lib/extracao/verificador";
 async function main() {
   const caminho = process.argv[2];
   if (!caminho) throw new Error("uso: teste-extracao.ts <pdf>");
+
+  // O motor primeiro: sem isso, quem clonou o projeto sem o Claude Code
+  // recebia "spawn claude ENOENT" com stack trace, em vez do que fazer.
+  const falta = faltaPraLer();
+  if (falta) {
+    console.error(falta);
+    process.exit(1);
+  }
+
   const inicio = Date.now();
 
   const paginas = await extraiPaginas(new Uint8Array(readFileSync(caminho)));
