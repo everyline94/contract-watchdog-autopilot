@@ -2,10 +2,13 @@
   "name": "scaffold",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=20.9"
+  },
   "scripts": {
-    "dev": "NODE_OPTIONS=--max-http-header-size=131072 next dev",
+    "dev": "cross-env NODE_OPTIONS=--max-http-header-size=131072 next dev",
     "build": "next build",
-    "start": "NODE_OPTIONS=--max-http-header-size=131072 next start",
+    "start": "cross-env NODE_OPTIONS=--max-http-header-size=131072 next start",
     "lint": "eslint",
     "test": "vitest run",
     "test:watch": "vitest",
@@ -39,6 +42,7 @@
     "@types/react-dom": "^19",
     "@vercel/config": "^0.7.0",
     "@vitest/coverage-v8": "^4.1.11",
+    "cross-env": "^10.1.0",
     "eslint": "^9",
     "eslint-config-next": "16.3.3",
     "tailwindcss": "^4",

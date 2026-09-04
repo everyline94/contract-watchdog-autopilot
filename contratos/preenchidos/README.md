@@ -64,7 +64,8 @@ Três coisas ficam sob teste aqui:
 - **Saldo:** R$ 2.303,00, **sem data absoluta**, só a regra "até 07 dias antes do
   evento"
 
-**Este contrato tem exatamente uma data no documento inteiro: 05/09/2026.**
+**Este contrato tem exatamente uma data de obrigação no documento inteiro:
+05/09/2026.** A única outra data escrita é a da assinatura, na última página.
 
 Não tem data de evento, e não tem porque o modelo original não tem mesmo: a
 cláusula 7 diz que a contratante vai informar data, local e tipo com 30 dias de

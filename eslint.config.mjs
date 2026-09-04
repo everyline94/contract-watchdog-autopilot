@@ -12,10 +12,6 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
-    // Clone de terceiro, nao e codigo do projeto:
-    "bmad-method/**",
-    "_bmad/**",
-    "_bmad-output/**",
   ]),
 ]);
 

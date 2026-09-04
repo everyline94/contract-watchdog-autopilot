@@ -1,6 +1,3 @@
-# clone do BMad usado só como fonte do instalador
-bmad-method/
-
 # dependências e build
 node_modules/
 .next/
@@ -59,20 +56,13 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# Contratos ORIGINAIS: tem dado pessoal real (CPF, endereco, telefone e
-# assinatura manuscrita). O que entra no historico do git fica la para sempre,
-# inclusive em repo privado. So a versao anonimizada e versionada.
+# So os contratos ficticios de contratos/preenchidos/ sao versionados.
 contratos/*.docx
 contratos/*.pdf
 !contratos/preenchidos/
 
-# De-para da anonimizacao e listas do filter-repo: o lado esquerdo das trocas
-# e dado pessoal real. NUNCA versionar.
-tools/privado*
-
 # saida de ferramenta local
 .playwright-mcp/
-.env.gateway
 
 # Prints de conferencia e snapshots de acessibilidade do Playwright ficam
 # soltos na raiz quando a gente tira. Sao descartaveis: as imagens que o
@@ -81,6 +71,3 @@ tools/privado*
 /*-snap.yml
 /*-snapshot.yml
 /dash-filtro.yml
-
-# saida vazia do BMad
-_bmad-output/

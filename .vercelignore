@@ -1,11 +1,4 @@
-# clone do BMad: fonte do instalador, nao entra no deploy
-bmad-method/
-
-# instalacao local do BMad e saidas dele
-_bmad/
-_bmad-output/
-
-# contratos reais e gerados: dado de contrato nao vai para o build.
+# contratos: dado de contrato nao vai para o build.
 # Excecao unica: o GABARITO.json ficticio, que a home importa para contar
 # os numeros da demo em codigo.
 contratos/*
@@ -13,9 +6,6 @@ contratos/*
 contratos/preenchidos/*
 !contratos/preenchidos/GABARITO.json
 
-# ferramentas python de preparo dos PDFs
-tools/
-tasks/
 docs/
 *.md
 !README.md

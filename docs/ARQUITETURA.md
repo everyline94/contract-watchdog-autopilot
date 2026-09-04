@@ -118,7 +118,7 @@ create table watchdog.key_dates (
   id            uuid primary key default gen_random_uuid(),
   contract_id   uuid not null references watchdog.contracts(id) on delete cascade,
   obligation_id uuid references watchdog.obligations(id),
-  kind          text not null,           -- ver tipos em lib/types.ts
+  kind          text not null,           -- ver tipos em src/lib/types.ts
   due_date      date not null,
   amount_cents  bigint,
   anchor        text not null,           -- 'evento' | 'assinatura' | 'absoluta'
@@ -158,10 +158,10 @@ que qualquer flag de controle no código.
 O produto vigia o tempo. Uma demo dura cinco minutos. Sem resolver isso, o
 monitoramento contínuo, que é o coração da tese, fica invisível no palco.
 
-**Regra: nenhum lugar do código chama `new Date()` direto.** Tudo passa por:
+**Regra: nenhum lugar do código lê o relógio (`new Date()` sem argumento) direto.** Tudo passa por:
 
 ```ts
-// lib/clock.ts
+// src/lib/clock.ts
 export function now(): Date {
   const override = process.env.DEMO_NOW ?? headers().get('x-demo-now')
   return override ? new Date(override) : new Date()

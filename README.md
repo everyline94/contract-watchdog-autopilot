@@ -27,7 +27,8 @@ nenhum.** É por isso que planilha e lembrete não resolvem: eles guardam datas,
 aqui o que existe são regras. "O saldo é pago até sete dias antes do evento" não
 é uma data, é uma conta que alguém precisa lembrar de fazer.
 
-Um dos três contratos tem **uma única data em oito páginas**. Nove das treze
+Um dos três contratos tem **uma única data de obrigação em oito páginas** (a
+outra data escrita nele é a da assinatura). Nove das treze
 obrigações dele dependem de uma data do evento que não consta no documento.
 
 ---
@@ -58,15 +59,17 @@ Duas consequências:
 | `/c/[token]` | A página que a contraparte abre pelo link da notificação |
 | `/ler` | Leitor ao vivo. Sobe qualquer PDF e vê a extração de verdade. Precisa de modelo, ver abaixo |
 | `/api/extrair` | A rota que o leitor chama: PDF entra, obrigações com citação e página saem |
-| `/api/cron/monitor` | O monitor diário. Fail-closed: sem `CRON_SECRET` devolve 401 |
+| `/api/cron/monitor` | O monitor diário. Fail-closed: sem `CRON_SECRET` devolve 401. Hoje é o esqueleto: autentica, resolve o relógio e devolve as janelas de aviso. Ler as datas e mandar o e-mail ainda não existe (TODO no código) |
 
-O `/app` roda em cima de um store em memória (`lib/data/store.ts`), semeado por
-`lib/data/mocks.ts`. Não tem banco: o `lib/db/cliente.ts` está pronto para o
+O `/app` roda em cima de um store em memória (`src/lib/data/store.ts`), semeado por
+`src/lib/data/mocks.ts`. Não tem banco: o `src/lib/db/cliente.ts` está pronto para o
 Supabase, mas nada o chama ainda.
 
 ---
 
 ## Rodar
+
+Precisa de Node 20.9 ou mais novo.
 
 ```bash
 npm install
@@ -112,28 +115,30 @@ DEMO_NOW=2026-12-02T09:00:00-03:00 npm run dev
 curl -H "x-demo-now: 2026-12-02T09:00:00-03:00" http://localhost:3000
 ```
 
-Nenhum lugar do código chama `new Date()` fora de `lib/clock.ts`.
+Nenhum lugar do código lê o relógio (`new Date()` sem argumento) fora de
+`src/lib/clock.ts`. Os outros `new Date(...)` só montam datas a partir de ano, mês
+e dia.
 
 ---
 
 ## Mapa
 
 ```
-lib/types.ts            o contrato de dados entre as frentes
-lib/motor-datas.ts      o motor. Função pura, sem IO, sem relógio, sem modelo
-lib/feriados.ts         feriado móvel derivado da Páscoa, para dia útil
-lib/clock.ts            o agora injetável
-lib/extracao/           pdf -> texto por página, prompt por família, verificador de citação
-lib/data/               store em memória, mocks, regras de status e confiança
-lib/demo/               os três contratos da demo e o resolvedor de datas
-app/(app)/app/          o produto
-components/produto/     as telas do produto
-components/watchdog/    a demo guiada e o leitor ao vivo
-components/ui/          base do shadcn, falando a língua do tokens.css
-styles/tokens.css       o design system inteiro, uma cor só
-contratos/preenchidos/  os três PDFs fictícios e o gabarito de 47 obrigações
-tests/                  os 85 testes, todos sobre cláusulas reais
-docs/                   arquitetura e o schema de extração
+src/lib/types.ts          o contrato de dados entre as frentes
+src/lib/motor-datas.ts    o motor. Função pura, sem IO, sem relógio, sem modelo
+src/lib/feriados.ts       feriado móvel derivado da Páscoa, para dia útil
+src/lib/clock.ts          o agora injetável
+src/lib/extracao/         pdf -> texto por página, prompt por família, verificador de citação
+src/lib/data/             store em memória, mocks, regras de status e confiança
+src/lib/demo/             os três contratos da demo e o resolvedor de datas
+src/app/(app)/app/        o produto
+src/components/produto/   as telas do produto
+src/components/watchdog/  a demo guiada e o leitor ao vivo
+src/components/ui/        base do shadcn, falando a língua do tokens.css
+src/styles/tokens.css     o design system inteiro, uma cor só
+contratos/preenchidos/    os três PDFs fictícios e o gabarito de 47 obrigações
+src/tests/                os 85 testes, todos sobre cláusulas reais
+docs/                     arquitetura e o schema de extração
 ```
 
 ---
