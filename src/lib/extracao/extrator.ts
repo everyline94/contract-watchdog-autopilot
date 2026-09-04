@@ -297,12 +297,42 @@ export async function extraiFamilia(
   };
 }
 
+/**
+ * Concorrencia 2, a mesma da rota `/api/extrair`: quatro chamadas simultaneas
+ * estouram o limite de tokens por minuto da conta e viram fila com timeout.
+ * Duas por vez mantem o fluxo andando sem derrubar a mais lenta.
+ *
+ * A rota ja nascia com essa trava; aqui era `Promise.all` nas quatro, e isso
+ * so nao doia porque o unico chamador era o script de teste, rodando sozinho.
+ * Com a fila de upload do produto usando esta funcao, varias pessoas lendo ao
+ * mesmo tempo passariam a competir pelo mesmo limite.
+ */
+async function emParalelo<T>(
+  nomes: NomeFamilia[],
+  trabalho: (n: NomeFamilia) => Promise<T>,
+  simultaneas = 2,
+): Promise<T[]> {
+  const resultados: T[] = new Array(nomes.length);
+  const fila = nomes.map((nome, i) => ({ nome, i }));
+  const trabalhador = async () => {
+    for (;;) {
+      const item = fila.shift();
+      if (!item) return;
+      resultados[item.i] = await trabalho(item.nome);
+    }
+  };
+  await Promise.all(
+    Array.from({ length: Math.min(simultaneas, nomes.length) }, trabalhador),
+  );
+  return resultados;
+}
+
 export async function extraiContrato(
   paginas: PaginaTexto[],
 ): Promise<ResultadoExtracao> {
   const motor = motorDisponivel();
   const nomes = Object.keys(SCHEMAS_FAMILIA) as NomeFamilia[];
-  const partes = await Promise.all(nomes.map((n) => extraiFamilia(n, paginas)));
+  const partes = await emParalelo(nomes, (n) => extraiFamilia(n, paginas));
   return {
     contrato: Object.assign(
       {},
