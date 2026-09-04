@@ -7,14 +7,14 @@
  * nao ha OAuth: o estado do conector mora no store mock como qualquer outro
  * dado do produto.
  *
- * O que e real e o caminho DEPOIS dela, e ele importa mais: o arquivo
- * importado entra na mesma fila do dropzone, pela mesma `adicionaArquivos`, e
- * anda pelas mesmas etapas com o mesmo contador. Quando o OAuth de verdade
- * entrar, ele troca `conectaProvedor` e a listagem de arquivos; o resto do
- * arquivo nao muda.
+ * O que e real e o caminho DEPOIS dela: o arquivo importado entra na mesma
+ * fila do dropzone e anda pelas mesmas etapas. Como aqui nao existe PDF, so
+ * o nome, ele entra por `adicionaNomes` e avanca pelo relogio, sem leitura de
+ * modelo. Quando o OAuth de verdade entrar, `conectaProvedor` passa a trazer
+ * os bytes e a chamada vira `adicionaArquivos`, que le igual ao dropzone.
  */
 import { db, type Store } from "./store";
-import { adicionaArquivos } from "./upload";
+import { adicionaNomes } from "./upload";
 import type { Conector, ProvedorConector } from "./tipos";
 
 /** Quanto tempo o estado "conectando" fica na tela. */
@@ -68,7 +68,7 @@ export async function importaArquivo(entrada: {
   const arquivo = conector.arquivos.find((a) => a.id === entrada.arquivoId);
   if (!arquivo) return { ok: false, erro: "Esse arquivo já saiu da pasta." };
 
-  await adicionaArquivos([arquivo.nome]);
+  await adicionaNomes([arquivo.nome]);
   conector.arquivos = conector.arquivos.filter((a) => a.id !== arquivo.id);
   return { ok: true, nomeArquivo: arquivo.nome };
 }

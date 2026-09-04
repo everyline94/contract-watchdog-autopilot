@@ -55,7 +55,7 @@ Duas consequências:
 | Rota | O que é |
 |---|---|
 | `/` | Demo guiada em seis passos. Roda sem modelo: usa o gabarito e o motor de datas |
-| `/app` | O produto: painel, upload com fila, ficha do contrato com cláusulas e agenda, fila de incerteza, notificação por e-mail e WhatsApp, conectores de Drive e OneDrive (simulados). **A leitura do PDF aqui é encenada**, ver abaixo |
+| `/app` | O produto: painel, upload com fila que **lê o PDF de verdade**, ficha do contrato com cláusulas e agenda, fila de incerteza, notificação por e-mail e WhatsApp, conectores de Drive e OneDrive (simulados) |
 | `/c/[token]` | A página que a contraparte abre pelo link da notificação |
 | `/ler` | Leitor ao vivo. Sobe qualquer PDF e vê a extração de verdade. Precisa de modelo, ver abaixo |
 | `/api/extrair` | A rota que o leitor chama: PDF entra, obrigações com citação e página saem |
@@ -67,14 +67,22 @@ Supabase, mas nada o chama ainda.
 
 ### Onde a leitura é de verdade
 
-Só o `/ler` lê o PDF. Ele chama `/api/extrair`, que roda o modelo, confere
-cada citação contra a página e devolve o calendário calculado.
+Dois lugares leem o PDF que você subir, pelo mesmo motor: páginas, modelo,
+verificador de citação e motor de datas.
 
-A fila de upload do `/app` **não lê o arquivo que você subir**. Ela avança por
-tempo (`ETAPAS_SIMULADAS` em `src/lib/data/upload.ts`) e devolve um resultado
-fixo, igual para qualquer PDF. É vitrine do fluxo do produto, não extração. Se
-você quer ver o sistema ler o **seu** contrato, é no `/ler`. A costura para
-ligar os dois está anotada no topo daquele arquivo.
+O `/ler` mostra a leitura crua: linha do calendário, citação literal, página.
+É onde dá para conferir o que o sistema entendeu, campo por campo.
+
+A fila de upload do `/app` roda a mesma leitura e traduz a saída para o
+vocabulário do produto (`src/lib/data/leitura-real.ts`): cláusula com tipo,
+valor, data limite e confiança. O que ficou abaixo do limiar vai para a fila
+de incerteza em vez de virar prazo. Como a leitura leva minutos, ela roda em
+segundo plano e a fila mostra o andamento.
+
+Os itens que já vêm na fila ao abrir o `/app` são semeados por
+`src/lib/data/mocks.ts` e continuam andando por tempo: não existe arquivo por
+trás deles. Os conectores de Drive e OneDrive também são simulados, e o que
+eles importam entra na fila só com o nome, sem leitura.
 
 ---
 

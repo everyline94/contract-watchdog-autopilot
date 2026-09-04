@@ -77,10 +77,18 @@ export function useFilaUpload() {
   });
 }
 
+/**
+ * Manda o arquivo inteiro, nao o nome: quem le o PDF e o servidor. Antes so
+ * o nome viajava, e por isso a fila nunca teve como ler nada.
+ */
 export function useAdicionaArquivos() {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: (nomes: string[]) => adicionaArquivos(nomes),
+    mutationFn: (arquivos: File[]) => {
+      const form = new FormData();
+      for (const a of arquivos) form.append("arquivos", a);
+      return adicionaArquivos(form);
+    },
     onSuccess: () => qc.invalidateQueries({ queryKey: ["fila-upload"] }),
   });
 }

@@ -13,11 +13,27 @@ import type {
   ProvedorConector,
 } from "./tipos";
 
-/** Estado de simulacao de um item da fila. Semente fica congelada (null). */
-type Andamento = {
+/**
+ * Estado de um item da fila. Semente fica congelada (null).
+ *
+ * Os itens semeados continuam andando por tempo, porque nao tem arquivo por
+ * tras deles: sao a vitrine do painel. Arquivo que a pessoa sobe de verdade
+ * anda por `leitura`, que e a leitura real rodando em segundo plano.
+ */
+export type Andamento = {
   iniciadoEm: number | null;
   /** Clausulas extraidas aguardando o form da contraparte na etapa revisao. */
   extraidas?: Omit<Clausula, "id" | "contratoId">[];
+  /**
+   * Leitura de verdade em curso. Enquanto `terminadaEm` for null o item fica
+   * na etapa de extracao; no fim, ou `extraidas` tem as clausulas do PDF, ou
+   * `erro` tem o que dizer para quem subiu.
+   */
+  leitura?: {
+    comecouEm: number;
+    terminadaEm: number | null;
+    erro: string | null;
+  };
 };
 
 export type Store = Semente & {

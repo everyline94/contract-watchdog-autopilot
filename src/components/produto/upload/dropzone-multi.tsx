@@ -51,7 +51,7 @@ export function DropzoneMulti() {
     }
     if (aceitos.length === 0) return;
     adicionar.mutate(
-      aceitos.map((f) => f.name),
+      aceitos,
       {
         onSuccess: () =>
           toast.success(

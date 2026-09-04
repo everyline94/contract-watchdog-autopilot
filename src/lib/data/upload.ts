@@ -1,16 +1,30 @@
 "use server";
 
 /**
- * A fila de upload. Nesta etapa a leitura e SIMULADA: o item avanca pelas
- * etapas por tempo decorrido, e a "extracao" devolve um resultado canonico.
+ * A fila de upload.
  *
- * A costura pro motor real e esta: quando o /api/extrair entrar no fluxo,
- * `extracaoSimulada` vira a chamada real e o resto do arquivo nao muda.
+ * PDF que a pessoa sobe e lido de verdade: o arquivo chega no servidor, passa
+ * pelo mesmo motor do `/ler` (paginas, modelo, verificador de citacao, motor
+ * de datas) e as clausulas saem do documento dela. A leitura leva minutos,
+ * entao roda em segundo plano e a fila mostra o andamento.
+ *
+ * Os itens semeados em `mocks.ts` continuam andando por tempo, com o
+ * resultado canonico de `extracaoSimulada`: nao existe arquivo por tras
+ * deles, eles sao a vitrine do painel. A separacao e o `andamento.leitura`:
+ * quem tem leitura real anda por ela, quem nao tem anda pelo relogio.
  */
+import { faltaPraLer } from "@/lib/extracao/extrator";
 import { agora, hojeISO } from "@/lib/clock";
 import { deISO, paraISO, somaDias } from "@/lib/motor-datas";
+import { ErroLeitura, leContrato } from "./leitura-real";
 import { geraItensIncerteza } from "./regras";
-import { db, derivaContrato, proximoId, type Store } from "./store";
+import {
+  db,
+  derivaContrato,
+  proximoId,
+  type Andamento,
+  type Store,
+} from "./store";
 import {
   EXTENSOES_ACEITAS,
   LIMIAR_INCERTEZA,
@@ -130,11 +144,45 @@ function decorridoDe(item: ItemFilaUpload): number {
   return 0;
 }
 
-/** Avanca a simulacao dos itens vivos pelo tempo decorrido. Muta o store. */
+/**
+ * Andamento de quem esta sendo lido de verdade. A barra sobe devagar ate 95%
+ * porque nao ha como saber quanto falta: sao quatro chamadas ao modelo e o
+ * tempo varia com o tamanho do contrato. Chutar 100% antes da hora seria
+ * mentir para quem espera.
+ */
+function avancaLeituraReal(item: ItemFilaUpload, andamento: Andamento): void {
+  const l = andamento.leitura!;
+  if (l.erro) {
+    item.erro = l.erro;
+    return;
+  }
+  if (l.terminadaEm) {
+    item.etapa = "revisao";
+    item.progresso = 100;
+    return;
+  }
+  const decorrido = Date.now() - l.comecouEm;
+  if (decorrido < 2000) {
+    item.etapa = "leitura";
+    item.progresso = Math.round((decorrido / 2000) * 100);
+    return;
+  }
+  item.etapa = "extracao";
+  // Quatro minutos e a leitura tipica de um contrato de cinco paginas.
+  item.progresso = Math.min(95, Math.round(((decorrido - 2000) / 240_000) * 100));
+}
+
+/** Avanca os itens vivos: leitura real quando existe, relogio quando nao. */
 function avancaFila(s: Store, hoje: string): void {
   for (const item of s.filaUpload) {
     if (item.erro || item.etapa === "revisao" || item.etapa === "concluido")
       continue;
+
+    const real = s.andamento.get(item.id);
+    if (real?.leitura) {
+      avancaLeituraReal(item, real);
+      continue;
+    }
 
     // Item semeado sem relogio ganha um no primeiro poll, ajustado pra
     // continuar de onde a semente o deixou: a fila inteira anda sozinha.
@@ -185,9 +233,78 @@ export async function listaFila(): Promise<ItemFilaUpload[]> {
   return [...s.filaUpload].reverse();
 }
 
+/**
+ * Dispara a leitura de verdade em segundo plano.
+ *
+ * Nao da pra esperar aqui: sao minutos, e a server action responde em
+ * segundos pra fila aparecer na hora. O resultado aterrissa no andamento e o
+ * poll da fila encontra. Sem `await` de proposito, e por isso o catch e
+ * obrigatorio: promise solta que rejeita derruba o processo do Node.
+ */
+function disparaLeitura(s: Store, itemId: string, bytes: Uint8Array): void {
+  const andamento = s.andamento.get(itemId);
+  if (!andamento?.leitura) return;
+
+  void (async () => {
+    try {
+      const hoje = hojeISO(await agora());
+      const clausulas = await leContrato(bytes, hoje);
+      const atual = db().andamento.get(itemId);
+      if (!atual?.leitura) return;
+      atual.extraidas = clausulas;
+      atual.leitura.terminadaEm = Date.now();
+    } catch (e) {
+      const atual = db().andamento.get(itemId);
+      if (!atual?.leitura) return;
+      // Erro de leitura tem texto de produto; o resto vira mensagem generica
+      // e o cru vai pro log do servidor, nunca pro card da fila.
+      if (e instanceof ErroLeitura) {
+        atual.leitura.erro = e.message;
+      } else {
+        console.error("[upload] leitura falhou:", e);
+        atual.leitura.erro =
+          "A leitura falhou no meio do caminho. Tente subir o arquivo de novo.";
+      }
+      atual.leitura.terminadaEm = Date.now();
+    }
+  })();
+}
+
 export async function adicionaArquivos(
-  nomes: string[],
+  form: FormData,
 ): Promise<ItemFilaUpload[]> {
+  const s = db();
+  const arquivos = form.getAll("arquivos").filter((a): a is File => a instanceof File);
+
+  // O motor de pe antes de aceitar o arquivo: melhor recusar na entrada, com
+  // o que instalar, do que deixar a fila andar minutos pra morrer no fim.
+  const falta = faltaPraLer();
+
+  const novos: ItemFilaUpload[] = [];
+  for (const arquivo of arquivos) {
+    const item: ItemFilaUpload = {
+      id: proximoId(s, "up"),
+      nomeArquivo: arquivo.name,
+      etapa: "upload",
+      progresso: 0,
+      erro: falta,
+      contratoId: null,
+    };
+    s.filaUpload.push(item);
+    s.andamento.set(item.id, {
+      iniciadoEm: Date.now(),
+      leitura: { comecouEm: Date.now(), terminadaEm: null, erro: falta },
+    });
+    if (!falta) {
+      disparaLeitura(s, item.id, new Uint8Array(await arquivo.arrayBuffer()));
+    }
+    novos.push(item);
+  }
+  return novos;
+}
+
+/** Mantido para os testes e para a semente, que nao tem arquivo por tras. */
+export async function adicionaNomes(nomes: string[]): Promise<ItemFilaUpload[]> {
   const s = db();
   const novos = nomes.map((nome): ItemFilaUpload => {
     const item: ItemFilaUpload = {
